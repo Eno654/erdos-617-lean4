@@ -1,0 +1,133 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Erdős Problem #617: Balanced Colorings for r^2 and r = 3"
+  description: >-
+    Zero-dependency Lean 4 formalization of two results of Erdős and Gyárfás (1999)
+    associated with Erdős Problem #617: (1) for arbitrarily large r (every prime p),
+    the complete graph K_{r^2} admits a symmetric balanced r-coloring where every
+    (r + 1)-subset contains edges of all r colors, constructed via finite affine
+    planes AG(2, p); and (2) every symmetric 3-coloring of K_10 contains a 4-vertex
+    subset missing at least one color, proved via a single-color diamond-free extremal
+    degree and triangle-counting argument.
+  authors:
+    - "Anuta Cristian George"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Anuta Cristian George"
+
+classification:
+  arxiv: ["math.CO"]
+  msc2020: ["05C15", "05C35", "05C55"]
+
+sources:
+  - title: "Split and balanced colorings of complete graphs"
+    authors:
+      - "Paul Erdős"
+      - "András Gyárfás"
+    id: "https://doi.org/10.1016/S0012-365X(98)00325-2"
+    type: "article"
+    location: "Discrete Mathematics 200 (1999), 79–86"
+    relationship: "independently-proves"
+    note: >-
+      Formally proves the r^2 balanced-coloring infinitude result (for all prime r)
+      and the r = 3 impossibility on K_10 using self-contained elementary proofs
+      (Euclid's infinitude of primes + pigeonhole surjectivity mod p for AG(2, p),
+      and a single-color diamond-free extremal Book Proof for K_10).
+    license: "unknown"
+    author_endorsement: "not-contacted"
+  - title: "Erdős Problem #617"
+    contributors:
+      - name: "Thomas Bloom"
+        role: "problem-list maintainer"
+    id: "https://www.erdosproblems.com/617"
+    type: "web post"
+    location: "Problem #617"
+    relationship: "background"
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/617.lean"
+    relationship: "independent"
+    note: >-
+      Statement-only Mathlib formulation (`erdos_617.variants.r2` and
+      `erdos_617.variants.r_eq_3`) currently marked `sorry`. Our standalone zero-import
+      development proves the equivalent finite-graph statements directly over core Lean 4
+      types (`Fin p × Fin p`, `Fin 10`, `List.Pairwise`).
+
+status:
+  scope: >-
+    Formally proves two solved variants of Erdős Problem #617: (1) existence of symmetric
+    balanced r-colorings of K_{r^2} for arbitrarily large prime r; and (2) non-existence
+    of symmetric balanced 3-colorings of K_10. Does not formalize r = 4 (K_17), r = 5
+    (K_26, resolved in 2026), or the general open conjecture for r >= 6.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Quot.sound", "Classical.choice"]
+  main_results:
+    - declaration: "Erdos617.erdos_617_variants_r2"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Quot.sound", "Classical.choice"]
+      comparator_config: "comparator.json"
+    - declaration: "Erdos617.erdos_617_variants_r_eq_3"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Quot.sound", "Classical.choice"]
+      comparator_config: "comparator.json"
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Gemini"]
+      framework: "Google Antigravity"
+      tool_setup: >-
+        Lean 4 v4.36.0 kernel (`lake build`), Z3 SMT solver for finite extremal
+        reconnaissance on K_9/K_10 and AG(2, p) invariant checks, and Python scripts
+        for exhaustive small-order sanity checks.
+      cost:
+        wall_time: "2 hours"
+        spend_usd: "subscription-based"
+        hardware: "local Windows workstation"
+      prompting_notes: >-
+        Human-directed selection of Erdős #617 formalization targets, iterative
+        extremal analysis of K_10 to isolate a diamond-free single-color Book Proof,
+        and zero-import Lean 4 proof engineering verified by the Lean kernel.
+  spend_usd: "subscription-based"
+  notes: >-
+    All mathematical claims were checked by the Lean 4 v4.36.0 kernel with zero external
+    dependencies, zero `sorry` in proof modules, and zero non-standard axioms.
+
+fidelity:
+  divergences: >-
+    To keep the trusted statement surface completely dependency-free (zero Mathlib
+    imports), undirected edge colorings are represented as symmetric functions
+    `V -> V -> Fin r` (`∀ u v, c u v = c v u`) and `(r + 1)`-subsets as pairwise-distinct
+    lists (`S.Pairwise (· ≠ ·) ∧ S.length = p + 1`) or 4 distinct elements of `Fin 10`.
+    For `erdos_617_variants_r2`, infinitude of the set of valid `r` is stated directly
+    as `∀ N, ∃ p ≥ N, IsPrime p ∧ ...` rather than via `Set.Infinite`. Both statements
+    are mathematically equivalent to the corresponding variants of Erdős–Gyárfás (1999).
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "Anuta Cristian George"
+  notes: >-
+    Audited `Challenge.lean` statement surface for zero hidden hypotheses and verified
+    all declarations via `lake build`, `lean --json`, `#print axioms`, and `lake comparator`.
+
+alignment:
+  namespace: "Erdos617"
+  statements:
+    - source: "Erdős–Gyárfás (1999), balanced r-coloring of K_{r^2} for prime powers (prime case)"
+      lean: "Erdos617.erdos_617_variants_r2"
+      module: "Solution"
+      status: "proved"
+      note: "Constructs AG(2, p) slope coloring for every prime p >= N (Euclid's theorem + pigeonhole)."
+    - source: "Erdős–Gyárfás (1999), Theorem for r = 3 (no balanced 3-coloring of K_10)"
+      lean: "Erdos617.erdos_617_variants_r_eq_3"
+      module: "Solution"
+      status: "proved"
+      note: "Single-color extremal Book Proof eliminating delta in {0, 1, 2, 3} on a diamond-free color class."
+
+acknowledgements: "Paul Erdős and András Gyárfás (1999), Thomas Bloom's Erdős Problems database, and the Lean 4 / Palomar Registry community."

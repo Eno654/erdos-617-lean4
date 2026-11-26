@@ -1,0 +1,14 @@
+name = "Erdos617"
+version = "0.1.0"
+defaultTargets = ["Erdos617", "Challenge", "Solution"]
+
+[[lean_lib]]
+name = "Erdos617"
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
