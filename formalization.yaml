@@ -2,20 +2,21 @@
 version: "v0.4"
 
 project:
-  name: "Erdős Problem #617: Balanced Colorings for r^2 and r = 3"
+  name: "Erdős Problem #617: Balanced Colorings for Prime r^2 and r = 3"
   description: >-
     Zero-dependency Lean 4 formalization of two results of Erdős and Gyárfás (1999)
-    associated with Erdős Problem #617: (1) for arbitrarily large r (every prime p),
-    the complete graph K_{r^2} admits a symmetric balanced r-coloring where every
-    (r + 1)-subset contains edges of all r colors, constructed via finite affine
-    planes AG(2, p); and (2) every symmetric 3-coloring of K_10 contains a 4-vertex
-    subset missing at least one color, proved via a single-color diamond-free extremal
-    degree and triangle-counting argument.
+    associated with Erdős Problem #617: (1) for every prime p — and consequently for
+    arbitrarily large primes p >= N by Euclid's theorem — the complete graph K_{p^2}
+    admits a symmetric balanced p-coloring where every (p + 1)-subset contains edges
+    of all p colors, constructed via finite affine planes AG(2, p); and (2) every
+    symmetric 3-coloring of K_10 contains a 4-vertex subset missing at least one
+    color, proved via a single-color diamond-free extremal degree and triangle-counting
+    argument.
   authors:
-    - "Anuta Cristian George"
+    - "Cristian George Anuta"
   license: "Apache-2.0"
   responsible_maintainers:
-    - "Anuta Cristian George"
+    - "Cristian George Anuta"
 
 classification:
   arxiv: ["math.CO"]
@@ -31,10 +32,11 @@ sources:
     location: "Discrete Mathematics 200 (1999), 79–86"
     relationship: "independently-proves"
     note: >-
-      Formally proves the r^2 balanced-coloring infinitude result (for all prime r)
-      and the r = 3 impossibility on K_10 using self-contained elementary proofs
-      (Euclid's infinitude of primes + pigeonhole surjectivity mod p for AG(2, p),
-      and a single-color diamond-free extremal Book Proof for K_10).
+      Formally proves the prime case of the r^2 balanced-coloring construction (both
+      for every prime p and for arbitrarily large primes p >= N) and the r = 3
+      impossibility on K_10 using self-contained elementary proofs (Euclid's infinitude
+      of primes + pigeonhole surjectivity mod p for AG(2, p), and a single-color
+      diamond-free extremal proof for K_10).
     license: "unknown"
     author_endorsement: "not-contacted"
   - title: "Erdős Problem #617"
@@ -57,14 +59,21 @@ related_formalizations:
 
 status:
   scope: >-
-    Formally proves two solved variants of Erdős Problem #617: (1) existence of symmetric
-    balanced r-colorings of K_{r^2} for arbitrarily large prime r; and (2) non-existence
-    of symmetric balanced 3-colorings of K_10. Does not formalize r = 4 (K_17), r = 5
+    Formally proves (1) existence of a symmetric balanced p-coloring of K_{p^2} for
+    every prime p (`erdos_617_variants_r2_every_prime`), (2) the resulting infinitude
+    statement for arbitrarily large primes p >= N (`erdos_617_variants_r2`), and (3)
+    non-existence of symmetric balanced 3-colorings of K_10 (`erdos_617_variants_r_eq_3`).
+    Does not formalize composite prime powers q = p^k (k >= 2), r = 4 (K_17), r = 5
     (K_26, resolved in 2026), or the general open conjecture for r >= 6.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Quot.sound", "Classical.choice"]
   main_results:
+    - declaration: "Erdos617.erdos_617_variants_r2_every_prime"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Quot.sound", "Classical.choice"]
+      comparator_config: "comparator.json"
     - declaration: "Erdos617.erdos_617_variants_r2"
       file: "Solution.lean"
       sorry_count: 0
@@ -104,30 +113,39 @@ fidelity:
     imports), undirected edge colorings are represented as symmetric functions
     `V -> V -> Fin r` (`∀ u v, c u v = c v u`) and `(r + 1)`-subsets as pairwise-distinct
     lists (`S.Pairwise (· ≠ ·) ∧ S.length = p + 1`) or 4 distinct elements of `Fin 10`.
-    For `erdos_617_variants_r2`, infinitude of the set of valid `r` is stated directly
-    as `∀ N, ∃ p ≥ N, IsPrime p ∧ ...` rather than via `Set.Infinite`. Both statements
-    are mathematically equivalent to the corresponding variants of Erdős–Gyárfás (1999).
+    For `erdos_617_variants_r2_every_prime`, the prime case of the Erdős–Gyárfás affine-plane
+    construction is proved for every prime `p` (composite prime powers `p^k, k >= 2` are not
+    included); `erdos_617_variants_r2` states infinitude directly as `∀ N, ∃ p ≥ N, ...`
+    rather than via `Set.Infinite`.
 
 review:
   status: "self-assessed"
   reviewers:
-    - "Anuta Cristian George"
+    - "Cristian George Anuta"
   notes: >-
-    Audited `Challenge.lean` statement surface for zero hidden hypotheses and verified
-    all declarations via `lake build`, `lean --json`, `#print axioms`, and `lake comparator`.
+    Audited `Challenge.lean` statement surface for exact prose-to-theorem alignment
+    (updated after initial Palomar editorial review to explicitly export both
+    `erdos_617_variants_r2_every_prime` and `erdos_617_variants_r2`) and verified all
+    declarations via `lake build`, `leanchecker-paranoid`, `#print axioms`, and
+    `lake comparator` (Lean 4 + NanoDa + con-ron).
 
 alignment:
   namespace: "Erdos617"
   statements:
-    - source: "Erdős–Gyárfás (1999), balanced r-coloring of K_{r^2} for prime powers (prime case)"
+    - source: "Erdős–Gyárfás (1999), balanced p-coloring of K_{p^2} for every prime p"
+      lean: "Erdos617.erdos_617_variants_r2_every_prime"
+      module: "Solution"
+      status: "proved"
+      note: "Constructs AG(2, p) slope coloring for every prime p via pigeonhole surjectivity mod p."
+    - source: "Erdős–Gyárfás (1999), balanced r-coloring of K_{r^2} for infinitely many r"
       lean: "Erdos617.erdos_617_variants_r2"
       module: "Solution"
       status: "proved"
-      note: "Constructs AG(2, p) slope coloring for every prime p >= N (Euclid's theorem + pigeonhole)."
+      note: "Follows from `erdos_617_variants_r2_every_prime` and Euclid's infinitude of primes."
     - source: "Erdős–Gyárfás (1999), Theorem for r = 3 (no balanced 3-coloring of K_10)"
       lean: "Erdos617.erdos_617_variants_r_eq_3"
       module: "Solution"
       status: "proved"
       note: "Single-color extremal Book Proof eliminating delta in {0, 1, 2, 3} on a diamond-free color class."
 
-acknowledgements: "Paul Erdős and András Gyárfás (1999), Thomas Bloom's Erdős Problems database, and the Lean 4 / Palomar Registry community."
+acknowledgements: "Paul Erdős and András Gyárfás (1999), Thomas Bloom's Erdős Problems database, and the Lean 4 / Palomar Registry community. Author ORCID: https://orcid.org/0009-0005-7733-7079."

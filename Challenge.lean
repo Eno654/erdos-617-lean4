@@ -3,7 +3,7 @@ module
 public section
 
 /-!
-# Advertised Statements — Erdős Problem #617 (`r^2` Infinitude and `r = 3` on K_10)
+# Advertised Statements — Erdős Problem #617 (`r^2` and `r = 3` on K_10)
 
 This file is the small, zero-dependency, human-auditable statement surface checked by
 `lake comparator` against `Solution.lean`. Every declaration uses only Lean 4 core primitives
@@ -18,10 +18,24 @@ Reference:
 namespace Erdos617
 
 /--
+Erdős Problem #617 (`r^2` prime construction, Erdős–Gyárfás 1999):
+For every prime `p`, there exists a symmetric `p`-coloring of the complete graph on
+`p^2` vertices (`Fin p × Fin p`) such that every list of `p + 1` pairwise distinct
+vertices contains an edge of every color `k : Fin p`.
+-/
+theorem erdos_617_variants_r2_every_prime (p : Nat)
+    (hp : 2 ≤ p ∧ ∀ d : Nat, d ∣ p → d = 1 ∨ d = p) :
+    ∃ c : (Fin p × Fin p) → (Fin p × Fin p) → Fin p,
+      (∀ u v, c u v = c v u) ∧
+      (∀ (S : List (Fin p × Fin p)), S.Pairwise (· ≠ ·) → S.length = p + 1 →
+        ∀ k : Fin p, ∃ u ∈ S, ∃ v ∈ S, u ≠ v ∧ c u v = k) := by
+  sorry
+
+/--
 Erdős Problem #617 (`erdos_617.variants.r2`, Erdős–Gyárfás 1999):
-For arbitrarily large `r` (specifically every prime `p ≥ N`), there exists a symmetric
-`p`-coloring of the complete graph on `p^2` vertices (`Fin p × Fin p`) such that every
-list of `p + 1` pairwise distinct vertices contains an edge of every color `k : Fin p`.
+For every `N : Nat`, there exists a prime `p ≥ N` such that the complete graph on
+`p^2` vertices (`Fin p × Fin p`) admits a symmetric `p`-coloring in which every list of
+`p + 1` pairwise distinct vertices contains an edge of every color `k : Fin p`.
 -/
 theorem erdos_617_variants_r2 :
     ∀ N : Nat, ∃ p : Nat, N ≤ p ∧ (2 ≤ p ∧ ∀ d : Nat, d ∣ p → d = 1 ∨ d = p) ∧

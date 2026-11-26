@@ -5,13 +5,24 @@ public import Erdos617
 public section
 
 /-!
-# Proved Solutions — Erdős Problem #617 (`r^2` Infinitude and `r = 3` on K_10)
+# Proved Solutions — Erdős Problem #617 (`r^2` and `r = 3` on K_10)
 
 Comparator verifies that every theorem below matches its declaration in `Challenge.lean`
 exactly and depends only on `[propext, Quot.sound, Classical.choice]`.
 -/
 
 namespace Erdos617
+
+theorem erdos_617_variants_r2_every_prime (p : Nat)
+    (hp : 2 ≤ p ∧ ∀ d : Nat, d ∣ p → d = 1 ∨ d = p) :
+    ∃ c : (Fin p × Fin p) → (Fin p × Fin p) → Fin p,
+      (∀ u v, c u v = c v u) ∧
+      (∀ (S : List (Fin p × Fin p)), S.Pairwise (· ≠ ·) → S.length = p + 1 →
+        ∀ k : Fin p, ∃ u ∈ S, ∃ v ∈ S, u ≠ v ∧ c u v = k) := by
+  have hp0 : 0 < p := by have := hp.1; omega
+  exact ⟨Erdos617R2.affineColor p hp0,
+    Erdos617R2.affineColor_symm hp hp0,
+    Erdos617R2.affineColor_balanced hp hp0⟩
 
 theorem erdos_617_variants_r2 :
     ∀ N : Nat, ∃ p : Nat, N ≤ p ∧ (2 ≤ p ∧ ∀ d : Nat, d ∣ p → d = 1 ∨ d = p) ∧

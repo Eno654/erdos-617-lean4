@@ -2,6 +2,7 @@
   "challenge_module": "Challenge",
   "solution_module": "Solution",
   "theorem_names": [
+    "Erdos617.erdos_617_variants_r2_every_prime",
     "Erdos617.erdos_617_variants_r2",
     "Erdos617.erdos_617_variants_r_eq_3"
   ],
