@@ -7,7 +7,8 @@
 
 Standalone, **zero-dependency** (no Mathlib required), **zero-`sorry`**, **zero-custom-axiom** Lean 4 (`v4.36.0`) formal proofs for two theorems of P. Erdős and A. Gyárfás (*"Split and balanced colorings of complete graphs"*, Discrete Mathematics 200, 1999, pp. 79–86) associated with [Erdős Problem #617](https://www.erdosproblems.com/617).
 
-Author: **Cristian George Anuta** ([ORCID 0009-0005-7733-7079](https://orcid.org/0009-0005-7733-7079))
+Author: **Cristian George Anuta** ([ORCID 0009-0005-7733-7079](https://orcid.org/0009-0005-7733-7079))  
+*Developed in collaboration with **Gemini 4 Neon** and [**OXYO.si**](https://oxyo.si) (an AI system developed by the author since March 22, 2026).*
 
 This repository follows the [Palomar Registry](https://palomar-registry.org/) layout (`Challenge.lean`, `Solution.lean`, `comparator.json`, `formalization.yaml`) for independent verification and submission via [https://submit.palomar-registry.org/](https://submit.palomar-registry.org/).
 
