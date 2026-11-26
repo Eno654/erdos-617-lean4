@@ -1,7 +1,9 @@
 # Erdős Problem #617 — Zero-Dependency Lean 4 Formalization (Prime `r^2` & `r = 3` on $K_{10}$)
 
 [![CI](https://github.com/Eno654/erdos-617-lean4/actions/workflows/ci.yml/badge.svg)](https://github.com/Eno654/erdos-617-lean4/actions/workflows/ci.yml)
+[![Palomar Registry](https://img.shields.io/badge/Palomar-PALOMAR--2026--11--26--000042%20v1-blue)](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-26-000042&version=1)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24553466.svg)](https://doi.org/10.5281/zenodo.24553466)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0005--7733--7079-A6CE39)](https://orcid.org/0009-0005-7733-7079)
 
 Standalone, **zero-dependency** (no Mathlib required), **zero-`sorry`**, **zero-custom-axiom** Lean 4 (`v4.36.0`) formal proofs for two theorems of P. Erdős and A. Gyárfás (*"Split and balanced colorings of complete graphs"*, Discrete Mathematics 200, 1999, pp. 79–86) associated with [Erdős Problem #617](https://www.erdosproblems.com/617).
 
